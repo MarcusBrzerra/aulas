@@ -141,7 +141,7 @@ section h3 {
 }
 
 /* Login Page */
-body {
+.login-body {
   min-height: 100vh;
   display: flex;
   align-items: center;
