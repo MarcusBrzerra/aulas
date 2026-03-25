@@ -5,33 +5,50 @@ document.addEventListener('DOMContentLoaded', () => {
   if (form) {
     const emailInput = document.getElementById('email');
     const passwordInput = document.getElementById('password');
-    const errorMessage = document.getElementById('errorMessage');
+    const emailError = document.getElementById('emailError');
+    const passwordError = document.getElementById('passwordError');
 
-    // Function to clear error message
-    const clearError = () => {
-      errorMessage.style.display = 'none';
-      errorMessage.textContent = '';
+    // Function to clear error messages
+    const clearErrors = () => {
+      emailError.style.display = 'none';
+      passwordError.style.display = 'none';
     };
 
     // Add input event listeners to clear errors when user starts typing
-    emailInput.addEventListener('input', clearError);
-    passwordInput.addEventListener('input', clearError);
+    emailInput.addEventListener('input', () => {
+      emailError.style.display = 'none';
+    });
+    passwordInput.addEventListener('input', () => {
+      passwordError.style.display = 'none';
+    });
 
     // Form submit event
     form.addEventListener('submit', (e) => {
       e.preventDefault();
       
+      clearErrors(); // Clear previous errors
+      
       const email = emailInput.value.trim();
       const password = passwordInput.value.trim();
-
-      if (!email || !password) {
-        errorMessage.textContent = 'Por favor, preencha todos os campos.';
-        errorMessage.style.display = 'block';
-        return;
+      
+      let hasErrors = false;
+      
+      if (!email) {
+        emailError.textContent = 'Email é obrigatório.';
+        emailError.style.display = 'block';
+        hasErrors = true;
       }
-
-      // If validation passes, redirect to dashboard
-      window.location.href = 'index.html';
+      
+      if (!password) {
+        passwordError.textContent = 'Senha é obrigatória.';
+        passwordError.style.display = 'block';
+        hasErrors = true;
+      }
+      
+      if (!hasErrors) {
+        // If validation passes, redirect to dashboard
+        window.location.href = 'index.html';
+      }
     });
   }
 });
